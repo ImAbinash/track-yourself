@@ -1,1 +1,28 @@
-<p>signin works!</p>
+<section fxLayoutAlign="center center" class="signin-section">
+    <div fxFlex.gt-xs="400px" fxFlex.xs="300px">
+        <mat-card>
+
+            <form fxLayout="column">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Email Id</mat-label>
+                    <input type="email" matInput placeholder="Enter email id">
+                    <mat-error>Email id must not be blank</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Enter password">
+                    <mat-error>Password must not be blank</mat-error>
+                </mat-form-field>
+
+
+
+
+                <p>Forgot password</p>
+                <button mat-raised-button color="primary">Log In</button>
+                <p class="signin-dont-acount">Don't have account? <span class="signin-signup-span" color="primary" (click)="goToSignup()">Sign up</span></p>
+            </form>
+
+        </mat-card>
+    </div>
+</section>
+

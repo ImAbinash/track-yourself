@@ -1,1 +1,89 @@
-<p>signup works!</p>
+<section fxLayoutAlign="center center" class="signup-section">
+    <div fxFlex.gt-xs="400px" fxFlex.xs="300px">
+        <mat-card>
+
+            <form fxLayout="column" [formGroup]="registrationForm">
+                <mat-form-field appearance="legacy">
+                    <mat-label>First Name</mat-label>
+                    <input type="text" matInput placeholder="Enter first name" formControlName="firstName">
+                    <mat-error>First Name cann't be empty</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text" matInput placeholder="Enter last name" formControlName="lastName">
+                    <mat-error>Last Name cann't be empty</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Email Id</mat-label>
+                    <input type="email" matInput placeholder="Enter email id" formControlName="emailId">
+                    <mat-error *ngIf="registrationForm.get('emailId')?.hasError('required')">Email id cann't be blank
+                    </mat-error>
+                    <mat-error *ngIf="registrationForm.get('emailId')?.hasError('email')">Invalid email id</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Enter password" formControlName="password">
+                    <mat-error *ngIf="registrationForm.get('password')?.hasError('required')">Password cann't be blank
+                    </mat-error>
+                    <mat-error *ngIf="registrationForm.get('password')?.hasError('minlength')  ">
+                        Password must atleast 8 character length
+                    </mat-error>
+                    <mat-error
+                        *ngIf="registrationForm.get('password')?.hasError('error') && !registrationForm.get('password')?.hasError('minlength')  ">
+                        Password should contain an uppercase, lowercase and numeric. Ex: example@test.com
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Confirm password</mat-label>
+                    <input type="password" matInput placeholder="Enter confirm password"
+                        formControlName="confirmPassword">
+                    <mat-error *ngIf="registrationForm.get('confirmPassword')?.hasError('required')">Confirm password
+                        cann't be blank</mat-error>
+                    <mat-error
+                        *ngIf="!registrationForm.get('confirmPassword')?.hasError('required') && registrationForm?.hasError('error')">
+                        Password and Confirm password not matching</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Phone number</mat-label>
+                    <input type="text" matInput placeholder="Enter phone number" formControlName="phoneNumber">
+                    <mat-error *ngIf="registrationForm.get('phoneNumber')?.hasError('required')">Phone number cann't be
+                        empty</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option value="">Gender</mat-option>
+                        <mat-option value="Male">
+                            Male
+                        </mat-option>
+                        <mat-option value="Female">
+                            Female
+                        </mat-option>
+                        <mat-option value="Other">
+                            Other
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="registrationForm.get('gender')?.hasError('required')">Select any gender
+                    </mat-error>
+
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Date of birth</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="registrationForm.get('dob')?.hasError('required')">Choose your date of birth
+                    </mat-error>
+                </mat-form-field>
+                <mat-checkbox class="example-margin" formControlName="isAcceptedTerms"
+                    class="signup-terms-condition-checkbox">I accept terms & conditions</mat-checkbox>
+                <button mat-raised-button color="primary" (click)="register()">Register</button>
+                <p class="signup-dont-acount">Already have account? <span class="signup-signup-span" color="primary"
+                        (click)="goTosignup()">Sign in</span></p>
+            </form>
+        </mat-card>
+    </div>
+</section>

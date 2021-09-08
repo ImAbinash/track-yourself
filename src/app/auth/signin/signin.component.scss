@@ -1,0 +1,16 @@
+@import "../../shared/styles/_varriable";
+
+.signin-section{
+    height:90%
+}
+
+.signin-signup-span{
+    font-weight: bold;
+    cursor: pointer;
+    color:$theme-color;
+}
+
+.signin-dont-acount{
+    text-align: center;
+    margin-top: 31px;
+}

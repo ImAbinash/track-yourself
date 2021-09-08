@@ -1,0 +1,20 @@
+@import "../../shared/styles/_varriable";
+
+.signup-section{
+    min-height:90%
+}
+
+.signup-signup-span{
+    font-weight: bold;
+    cursor: pointer;
+    color:$theme-color;
+}
+
+.signup-dont-acount{
+    text-align: center;
+    margin-top: 31px;
+}
+
+.signup-terms-condition-checkbox{
+    margin-bottom: 10px;
+}

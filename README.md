@@ -7,6 +7,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     npm install firebase angularfire2 --save
     npm i -s @angular/flex-layout
     npm install --save hammerjs
+    npm i @angular/material-moment-adapter
+    npm install moment
+    npm i uuid
+    npm i @types/uuid
+
     
 # CLI Commands
     1. generate module: npx ng generate module { module name }
