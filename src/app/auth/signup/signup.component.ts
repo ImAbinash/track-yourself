@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
       firstName: ['Abinash', Validators.required],
       lastName: ['Pradhan', Validators.required],
       emailId: ['abinash.sil668@gmail.com', [Validators.required, Validators.email]],
-      password: ['@Binash661', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()]],
+      password: ['@Binash661', [Validators.required, Validators.minLength(6), createPasswordStrengthValidator()]],
       confirmPassword: ['@Binash661', [Validators.required]],
       phoneNumber: ['1234567890', [Validators.required, validatePhoneNumber()]],
       gender: ['Male', Validators.required],
