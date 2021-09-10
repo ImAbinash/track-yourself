@@ -1,0 +1,62 @@
+<section style="margin-top: 10px;">
+    <div style="margin-bottom: 10px;">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        Create a new category
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+
+                <form [formGroup]="categoryForm" (ngSubmit)="createCategory()" fxLayout="column" fxLayoutGap="10px">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>Category name</mat-label>
+                        <input type="text" matInput placeholder="Enter category name" formControlName="categoryName">
+                        <mat-error *ngIf="categoryForm.get('categoryName')?.hasError('required')">Enter category name
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary">Save</button>
+                </form>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+
+
+    <div *ngFor="let category of (catObservable$ | async)" style="margin-bottom:10px;">
+        <mat-accordion >
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        {{category.categoryName}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div style="text-align: right;">
+                   <button mat-raised-button color="primary" (click)="showSubCategory=true">Create sub-category</button>
+                </div>
+                <div>
+                    <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory()" fxLayout="column"
+                    *ngIf="showSubCategory">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Category name</mat-label>
+                            <input type="text" matInput placeholder="Enter category name"
+                                formControlName="subCategoryName">
+                            <mat-error *ngIf="categoryForm.get('subCategoryName')?.hasError('required')">Enter category
+                                name
+                            </mat-error>
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" (click)="showSubCategory=false">Save</button>
+                    </form> 
+                </div>
+                <div>
+                    table
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+
+</section>

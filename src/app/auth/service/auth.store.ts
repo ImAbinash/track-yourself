@@ -1,3 +1,4 @@
+import { NotificationService } from './../../core/service/notification/notification.service';
 import { Injectable } from '@angular/core';
 //import { AngularFirestore,AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
@@ -6,21 +7,25 @@ import { from } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { convertDataToUserObject, User, UsreModel } from './../model/user.model';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthStoreService {
 
-    private readonly userDbPath = '/user/'
+    private readonly userDbPath = '/user/';
     private userRef: AngularFirestoreCollection<User>;
 
     private userSubject = new BehaviorSubject<User | null>(null);
+    private loggedOnSubject = new BehaviorSubject<boolean>(false);
+    private USER_DATA = "USER_DATA";
     user$: Observable<User | null>;
-
-    constructor(private firestore: AngularFirestore) {
+    isLoggedOn$: Observable<boolean>;
+    constructor(private router:Router,private firestore: AngularFirestore, private notificationService: NotificationService) {
         this.userRef = this.firestore.collection(this.userDbPath);
         this.user$ = this.userSubject.asObservable();
+        this.isLoggedOn$ = this.loggedOnSubject.asObservable();
     }
 
     createUser(userObj: User) {
@@ -40,7 +45,7 @@ export class AuthStoreService {
     }
 
     login(signnObj: { emailId: string, password: string }) {
-        this.firestore.collection<User>(this.userDbPath, ref =>
+        const userSubscription = this.firestore.collection<User>(this.userDbPath, ref =>
             ref.where('emailId', '==', signnObj.emailId))
             .valueChanges().pipe(
                 map(document => document),
@@ -48,17 +53,46 @@ export class AuthStoreService {
                     const resp = data[0];
                     const convertedUserData = convertDataToUserObject({ ...resp });
                     this.userSubject.next({ ...convertedUserData });
+                    this.loggedOnSubject.next(true);
+                    this.notificationService.showSuccess("Successfully logged in");
+                    localStorage.setItem(this.USER_DATA, JSON.stringify(resp));
+                    this.goToDashBoard();
                 }),
                 catchError(error => {
                     this.userSubject.next(null);
                     return throwError(error)
                 })
-            ).
-            subscribe((data) => console.log(data));
+            ).subscribe();
     }
 
+    logonStatus() {
+        const localStorageData = (localStorage.getItem(this.USER_DATA) || '{"id":null}');
+        const parsedUser: User = JSON.parse(localStorageData);
+        if (parsedUser.id != null) {
+            this.loggedOnSubject.next(true);
+            this.userSubject.next(parsedUser);
+            this.goToDashBoard();
+            
+        } else {
+            this.loggedOnSubject.next(false);
+            this.userSubject.next(null);
+            this.goToLogin();
+        }
 
+    }
 
-
+    goToLogin(){
+        this.router.navigate(['/signin']);
+    }
+    goToDashBoard(){
+        this.router.navigate(['/category']);
+    }
+    logOut(){
+        console.log("app log out")
+        localStorage.removeItem(this.USER_DATA);
+        this.userSubject.next(null);
+        this.loggedOnSubject.next(false);
+        this.goToLogin();
+    }
 
 }

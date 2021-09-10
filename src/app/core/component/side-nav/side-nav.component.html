@@ -1,0 +1,15 @@
+
+  <mat-nav-list class="sidenav-navlist" fxLayoutGap="10px">
+    <a mat-list-item routerLink="/dashboard" (click)="closeSideNav()">
+        <mat-icon aria-hidden="false" class="icon-mr">dashboard</mat-icon>
+        Dashboard
+    </a>
+    <a mat-list-item routerLink="/category" (click)="closeSideNav()">
+        <mat-icon  aria-hidden="false" class="icon-mr">assessment</mat-icon>
+        Category
+    </a>
+    <a mat-list-item (click)="logOut()">
+        <mat-icon aria-hidden="false" class="icon-mr" >lock</mat-icon>
+        Logout
+    </a>
+</mat-nav-list>

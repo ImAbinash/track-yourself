@@ -12,6 +12,8 @@ import { environment } from './../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ToastrModule } from 'ngx-toastr';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
@@ -22,8 +24,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     BrowserModule,
     NgMaterialModule,
+    CoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      timeOut:2000,
+      closeButton:true
+    }), 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],

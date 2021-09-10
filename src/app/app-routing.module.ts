@@ -1,3 +1,4 @@
+import { CategoryModule } from './category/category.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -6,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'category',
+    loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
   },
   { path: '**', component: PageNotFoundComponent }
 ];
