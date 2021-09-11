@@ -1,10 +1,12 @@
-import { Observable } from 'rxjs';
-import { CategorySubcategoryService } from './../service/category-subcategory.service';
 
+import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ICategoryWithSubCategoryModel } from '../model/category-subcategory.model';
+
+import { CategorySubcategoryService } from './../service/category-subcategory.service';
 import { CategorySubcategoryStore } from '../service/category-subcategory.store';
+
+import { ICategoryWithSubCategoryModel } from '../model/category-subcategory.model';
 
 @Component({
   selector: 'app-category-subcategory',
@@ -16,7 +18,7 @@ export class CategorySubcategoryComponent implements OnInit {
   panelOpenState: boolean = false;
   categoryForm: FormGroup;
   subCategoryForm: FormGroup;
-
+  subCategoryIdx:number=-1;
   catObservable$!:Observable<any>;
 
   showSubCategory: boolean = false;
@@ -52,10 +54,16 @@ export class CategorySubcategoryComponent implements OnInit {
   }
 
 
-  createSubCategory() {
+  createSubCategory(category:Partial<ICategoryWithSubCategoryModel>) {
     if (this.subCategoryForm.valid) {
-
+      console.log(this.subCategoryForm.value);
+      this.catSubCatService.createSubCategory(category,this.subCategoryForm.value);
     }
   }
+
+  toggleSubCategory(index:number){
+    this.subCategoryIdx = (this.subCategoryIdx==index)?-1:index;
+  }
+
 
 }

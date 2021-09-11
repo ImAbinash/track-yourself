@@ -25,9 +25,10 @@
 
 
 
-    <div *ngFor="let category of (catObservable$ | async)" style="margin-bottom:10px;">
-        <mat-accordion >
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <div style="margin-bottom:10px;">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            *ngFor="let category of (catObservable$ | async);index as idx;" >
                 <mat-expansion-panel-header>
                     <mat-panel-description>
                         {{category.categoryName}}
@@ -35,21 +36,20 @@
                 </mat-expansion-panel-header>
 
                 <div style="text-align: right;">
-                   <button mat-raised-button color="primary" (click)="showSubCategory=true">Create sub-category</button>
+                    <button mat-raised-button color="primary" (click)="toggleSubCategory(idx)">Create sub-category</button>
                 </div>
-                <div>
-                    <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory()" fxLayout="column"
-                    *ngIf="showSubCategory">
+                <div *ngIf="subCategoryIdx==idx">
+                    <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory(category)" fxLayout="column">
                         <mat-form-field appearance="legacy">
-                            <mat-label>Category name</mat-label>
+                            <mat-label>Sub-category name</mat-label>
                             <input type="text" matInput placeholder="Enter category name"
                                 formControlName="subCategoryName">
-                            <mat-error *ngIf="categoryForm.get('subCategoryName')?.hasError('required')">Enter category
+                            <mat-error *ngIf="categoryForm.get('subCategoryName')?.hasError('required')">Enter sub-category
                                 name
                             </mat-error>
                         </mat-form-field>
-                        <button mat-raised-button color="primary" (click)="showSubCategory=false">Save</button>
-                    </form> 
+                        <button mat-raised-button color="primary">Save</button>
+                    </form>
                 </div>
                 <div>
                     table
