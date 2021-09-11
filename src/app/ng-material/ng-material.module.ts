@@ -15,7 +15,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -33,7 +34,9 @@ import {MatTableModule} from '@angular/material/table';
     MatNativeDateModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatSidenavModule,
@@ -50,7 +53,9 @@ import {MatTableModule} from '@angular/material/table';
     MatNativeDateModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatAutocompleteModule
   ]
 })
 export class NgMaterialModule { }

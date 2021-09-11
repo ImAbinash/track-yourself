@@ -1,0 +1,17 @@
+@import "../../shared/styles/_varriable";
+
+.cf-header{
+    padding: 10px;
+    background-color: #f5eeee;
+}
+
+.cf-header-title{
+    color:$theme-color;
+    margin: 0px;
+    margin-left:8px;
+    font-weight: 600;
+    font-size: 18px;
+}
+.mat-icon-clr{
+    color:$theme-color;
+}

@@ -11,6 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     npm i uuid
     npm i @types/uuid
     npm install ngx-toastr
+    ag-grid-community ag-grid-angular
 
     
 # CLI Commands
@@ -52,5 +53,8 @@ This section logs what are the features added and when.
    <ol>
       <li>Proper use of subject variabble when we are creating any or updating any category or subcategory, need more improvement while creating subcategory.</li>
       <li>implemented mat-table to show subcategories under category</li>
+      <li>[+] Feature module: CashFlow</li>
+      <li>Cash-flow ui desgin: it logs all the cash flow activities like income, expense, saving ..etc and shown all the recent activities in the ag grid table</li>
+      <li>[+] Feature module: Dashboard</li>
    </ol>
 </details>

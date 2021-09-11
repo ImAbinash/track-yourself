@@ -1,0 +1,56 @@
+<h1 mat-dialog-title style="text-align: center;"> Cash-Flow Log</h1>
+<div mat-dialog-content>
+
+    <form fxLayout="column" [formGroup]="cashFlowForm">
+        <mat-form-field appearance="legacy">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <mat-option value="Income">Income</mat-option>
+                <mat-option value="Income">Expense</mat-option>
+                <mat-option value="Income">Saving</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+            <mat-label>Sub-Category</mat-label>
+            <mat-select formControlName="subCategory">
+                <mat-option value="Income">Salary</mat-option>
+                <mat-option value="Income">Interest</mat-option>
+                <mat-option value="Income">Bank Deposite</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Spent For/By</mat-label>
+            <input type="text" placeholder="Choose from list or add new one" aria-label="text" matInput
+                formControlName="operatedAgainst" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of options" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="operatedOnInstance">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Choose your date of birth
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="legacy">
+            <mat-label>Amount</mat-label>
+            <input type="text" matInput placeholder="Enter Amount" formControlName="amount">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="legacy">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Save</button>
+    </form>
+
+</div>
+<div mat-dialog-actions>
+    <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+    <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>

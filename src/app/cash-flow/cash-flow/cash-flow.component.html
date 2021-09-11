@@ -1,0 +1,22 @@
+<section>
+    <div fxFlex fxLayout="column">
+        <div fxFlex fxLayout="row" class="cf-header">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon class="mat-icon-clr">credit_card</mat-icon>
+                <p class="cf-header-title"> Cash Flow</p>
+            </div>
+            <div fxFlex fxLayoutAlign="end">
+                <button mat-raised-button color="primary" style="float: right;" (click)="openDialog()">Add <mat-icon>add_circle_outline
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+
+
+
+        <ag-grid-angular style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="rowData"
+            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef">
+        </ag-grid-angular>
+    </div>
+
+</section>

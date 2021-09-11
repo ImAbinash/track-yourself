@@ -85,7 +85,7 @@ export class AuthStoreService {
         this.router.navigate(['/signin']);
     }
     goToDashBoard(){
-        this.router.navigate(['/category']);
+        this.router.navigate(['/cash-flow']);
     }
     logOut(){
         console.log("app log out")
