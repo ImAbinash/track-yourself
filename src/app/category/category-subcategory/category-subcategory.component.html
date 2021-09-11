@@ -27,36 +27,70 @@
 
     <div style="margin-bottom:10px;">
         <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            *ngFor="let category of (catObservable$ | async);index as idx;" >
-                <mat-expansion-panel-header>
-                    <mat-panel-description>
-                        {{category.categoryName}}
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
+            <ng-container *ngFor="let category of (catObservable$ | async);index as idx;">
+                <mat-expansion-panel (opened)="panelEvent(category)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-description>
+                            {{category.categoryName}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-                <div style="text-align: right;">
-                    <button mat-raised-button color="primary" (click)="toggleSubCategory(idx)">Create sub-category</button>
-                </div>
-                <div *ngIf="subCategoryIdx==idx">
-                    <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory(category)" fxLayout="column">
-                        <mat-form-field appearance="legacy">
-                            <mat-label>Sub-category name</mat-label>
-                            <input type="text" matInput placeholder="Enter category name"
-                                formControlName="subCategoryName">
-                            <mat-error *ngIf="categoryForm.get('subCategoryName')?.hasError('required')">Enter sub-category
-                                name
-                            </mat-error>
-                        </mat-form-field>
-                        <button mat-raised-button color="primary">Save</button>
-                    </form>
-                </div>
-                <div>
-                    table
-                </div>
-            </mat-expansion-panel>
+                    <div style="text-align: right;">
+                        <button mat-raised-button color="primary" (click)="toggleSubCategory(idx)">Create
+                            sub-category</button>
+                    </div>
+                    <div *ngIf="subCategoryIdx==idx">
+                        <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory(category)" fxLayout="column">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Sub-category name</mat-label>
+                                <input type="text" matInput placeholder="Enter sub-category name"
+                                    formControlName="subCategoryName">
+                                <mat-error *ngIf="categoryForm.get('subCategoryName')?.hasError('required')">Enter
+                                    sub-category
+                                    name
+                                </mat-error>
+                            </mat-form-field>
+                            <button mat-raised-button color="primary">Save</button>
+                        </form>
+                    </div>
+                    <div>
+                        <ng-container *ngIf="dataSource.length>0">
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                </ng-container>
+
+                                <!-- status Column -->
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef> status </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </ng-container>
+                        <ng-container *ngIf="dataSource.length==0">
+                            <p style="text-align: center; color:red; margin-top:20px;">Create sub-category for {{category.categoryName}}</p>
+                        </ng-container>
+                    </div>
+                </mat-expansion-panel>
+            </ng-container>
         </mat-accordion>
     </div>
-
+    <div *ngIf="!isThereAnyCategory" style="padding: 10px; margin-top: 30px;">
+        <p>There is no caetgory and sub category. create category now. </p>
+        <p>Example: Category -> Income, Expense, Saving/Investments ...etc</p>
+        <p>Example: Sub-Category -> Income-> Salary, Interest, Bank Deposite ...etc Expesnse -> Fuel, Entertainment
+            ...etc</p>
+    </div>
 
 </section>

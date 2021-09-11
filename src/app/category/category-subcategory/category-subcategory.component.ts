@@ -1,11 +1,11 @@
-
-import { Observable } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { CategorySubcategoryService } from './../service/category-subcategory.service';
 import { CategorySubcategoryStore } from '../service/category-subcategory.store';
 
+import { ISubCategoryDataModel } from './../model/subCategory-data.model';
 import { ICategoryWithSubCategoryModel } from '../model/category-subcategory.model';
 
 @Component({
@@ -15,13 +15,18 @@ import { ICategoryWithSubCategoryModel } from '../model/category-subcategory.mod
 })
 export class CategorySubcategoryComponent implements OnInit {
 
-  panelOpenState: boolean = false;
   categoryForm: FormGroup;
   subCategoryForm: FormGroup;
-  subCategoryIdx:number=-1;
-  catObservable$!:Observable<any>;
 
+  dataSource : Array<ISubCategoryDataModel>=[];
+  catObservable$!: Observable<any>;
+  
+  panelOpenState: boolean = true;
   showSubCategory: boolean = false;
+  isThereAnyCategory: boolean = false;
+  subCategoryIdx: number = -1;
+  displayedColumns: string[] = ['position', 'name', 'status'];
+  
   constructor(private catSubCatService: CategorySubcategoryService,
     private catStore: CategorySubcategoryStore, private fb: FormBuilder) {
     this.categoryForm = this.fb.group({
@@ -40,29 +45,36 @@ export class CategorySubcategoryComponent implements OnInit {
   createCategory() {
     if (this.categoryForm.valid) {
       this.catSubCatService.cteateCategory(this.categoryForm.value);
-    } else {
-
+      this.categoryForm.reset();
     }
   }
 
 
 
   getAllCategory() {
-    this.catObservable$ =  this.catStore.categoryObs$;
-    console.log("catgoryObservable: ",this.catObservable$);
+    this.catObservable$ = this.catStore.categoryObs$;
 
+    this.catObservable$.subscribe((data) => {
+      this.isThereAnyCategory = data == null ? false : (data.length == 0 ? false : true);
+      console.log(data);
+    });0
   }
 
 
-  createSubCategory(category:Partial<ICategoryWithSubCategoryModel>) {
+  createSubCategory(category: Partial<ICategoryWithSubCategoryModel>) {
     if (this.subCategoryForm.valid) {
       console.log(this.subCategoryForm.value);
-      this.catSubCatService.createSubCategory(category,this.subCategoryForm.value);
+      this.catSubCatService.createSubCategory(category, this.subCategoryForm.value);
+      this.subCategoryForm.reset();
     }
   }
 
-  toggleSubCategory(index:number){
-    this.subCategoryIdx = (this.subCategoryIdx==index)?-1:index;
+  toggleSubCategory(index: number) {
+    this.subCategoryIdx = (this.subCategoryIdx == index) ? -1 : index;
+  }
+
+  panelEvent(categoryObj: ICategoryWithSubCategoryModel) {
+    this.dataSource  = this.catSubCatService.createDataSource(categoryObj.subCategory);
   }
 
 

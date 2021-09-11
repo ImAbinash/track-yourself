@@ -73,6 +73,25 @@ export function convertDataToCategoryObject(data: any) {
 
 
 }
+export function convertDataToSubCategoryObject(data: any) {
+    type Types = "string" | "number" | "boolean";
+    const keyValidators: Record<keyof ISubCategory, Types> = {
+        id:'string',
+        subCategoryName:'string',
+        isActive:'boolean',
+        isEnable:'boolean',
+        createdDate:'string',
+        updatedDate:'string',
+    }
+    console.log(typeof data);
+    if ((typeof data) === 'object' && data !== null) {
+        let userData = data as ISubCategory;
+        return userData;
+    }
+    throw new Error('Not an subCategory Data');
+
+
+}
 
 
 

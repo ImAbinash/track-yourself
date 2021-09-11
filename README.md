@@ -47,3 +47,10 @@ This section logs what are the features added and when.
       <li>dummy logo aded</li>
    </ol>
 </details>
+<details>
+   <summary>11-Sep-2021</summary>
+   <ol>
+      <li>Proper use of subject variabble when we are creating any or updating any category or subcategory, need more improvement while creating subcategory.</li>
+      <li>implemented mat-table to show subcategories under category</li>
+   </ol>
+</details>
