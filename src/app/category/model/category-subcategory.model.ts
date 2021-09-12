@@ -29,7 +29,8 @@ export function categoryInitialization(category:Partial<ICategoryWithSubCategory
         isActive : true,
         isEnable: true,
         createdDate : new DateHelper().getCurrentDateAndTimeInUTCFormat(),
-        updatedDate : new DateHelper().getCurrentDateAndTimeInUTCFormat()
+        updatedDate : new DateHelper().getCurrentDateAndTimeInUTCFormat(),
+        subCategory:[]
     }
     return categoryObj;
 }

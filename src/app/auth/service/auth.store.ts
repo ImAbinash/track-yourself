@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { from } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, take, tap } from 'rxjs/operators';
 
 import { convertDataToUserObject, User, UsreModel } from './../model/user.model';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class AuthStoreService {
     private USER_DATA = "USER_DATA";
     user$: Observable<User | null>;
     isLoggedOn$: Observable<boolean>;
-    constructor(private router:Router,private firestore: AngularFirestore, private notificationService: NotificationService) {
+    constructor(private router: Router, private firestore: AngularFirestore, private notificationService: NotificationService) {
         this.userRef = this.firestore.collection(this.userDbPath);
         this.user$ = this.userSubject.asObservable();
         this.isLoggedOn$ = this.loggedOnSubject.asObservable();
@@ -58,6 +58,7 @@ export class AuthStoreService {
                     localStorage.setItem(this.USER_DATA, JSON.stringify(resp));
                     this.goToDashBoard();
                 }),
+                take(1),
                 catchError(error => {
                     this.userSubject.next(null);
                     return throwError(error)
@@ -72,7 +73,7 @@ export class AuthStoreService {
             this.loggedOnSubject.next(true);
             this.userSubject.next(parsedUser);
             this.goToDashBoard();
-            
+
         } else {
             this.loggedOnSubject.next(false);
             this.userSubject.next(null);
@@ -80,14 +81,32 @@ export class AuthStoreService {
         }
 
     }
+    saveTag(userId: string, tag: Array<string>) {
+        try {
+            this.userRef.doc(userId).update({ 'tag': tag }).then((data) => {
 
-    goToLogin(){
+                const val = this.userSubject.getValue();
+                let usreObj = val as User;
+                if(usreObj.tag==undefined){
+                    usreObj['tag'] = [];
+                }
+                usreObj['tag'] = tag;
+                this.userSubject.next(val);
+                localStorage.setItem(this.USER_DATA, JSON.stringify(val));
+                this.notificationService.showSuccess("Tag added successfully...!!")
+            });
+        } catch (error) {
+            this.notificationService.showError("tag couldn't save..!");
+        }
+    }
+
+    goToLogin() {
         this.router.navigate(['/signin']);
     }
-    goToDashBoard(){
-        this.router.navigate(['/cash-flow']);
+    goToDashBoard() {
+        this.router.navigate(['/dashboard']);
     }
-    logOut(){
+    logOut() {
         console.log("app log out")
         localStorage.removeItem(this.USER_DATA);
         this.userSubject.next(null);

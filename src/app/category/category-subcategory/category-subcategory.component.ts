@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -13,18 +13,19 @@ import { ICategoryWithSubCategoryModel } from '../model/category-subcategory.mod
   templateUrl: './category-subcategory.component.html',
   styleUrls: ['./category-subcategory.component.scss']
 })
-export class CategorySubcategoryComponent implements OnInit {
+export class CategorySubcategoryComponent implements OnInit,OnDestroy {
 
   categoryForm: FormGroup;
   subCategoryForm: FormGroup;
 
   dataSource : Array<ISubCategoryDataModel>=[];
   catObservable$!: Observable<any>;
-  
+  catObservableSubscriber:any;
   panelOpenState: boolean = true;
   showSubCategory: boolean = false;
   isThereAnyCategory: boolean = false;
   subCategoryIdx: number = -1;
+  categoryOpenPanelIndex:number = -1;
   displayedColumns: string[] = ['position', 'name', 'status'];
   
   constructor(private catSubCatService: CategorySubcategoryService,
@@ -36,6 +37,8 @@ export class CategorySubcategoryComponent implements OnInit {
       subCategoryName: ['', Validators.required]
     });
 
+    console.log("category store");
+    console.log(this.catStore.categoryObs$);
   }
 
 
@@ -53,11 +56,16 @@ export class CategorySubcategoryComponent implements OnInit {
 
   getAllCategory() {
     this.catObservable$ = this.catStore.categoryObs$;
-
-    this.catObservable$.subscribe((data) => {
+    
+    this.catObservableSubscriber = this.catObservable$.subscribe((data) => {
       this.isThereAnyCategory = data == null ? false : (data.length == 0 ? false : true);
-      console.log(data);
-    });0
+      console.log("called");
+
+      if(this.categoryOpenPanelIndex != -1 && data !=undefined && data != null && data[this.categoryOpenPanelIndex]!= undefined){
+        this.dataSource  = this.catSubCatService.createDataSource(data[this.categoryOpenPanelIndex].subCategory);
+      }
+
+    });
   }
 
 
@@ -73,9 +81,14 @@ export class CategorySubcategoryComponent implements OnInit {
     this.subCategoryIdx = (this.subCategoryIdx == index) ? -1 : index;
   }
 
-  panelEvent(categoryObj: ICategoryWithSubCategoryModel) {
+  panelEvent(idx:number, categoryObj: ICategoryWithSubCategoryModel) {
+    this.categoryOpenPanelIndex = idx;
     this.dataSource  = this.catSubCatService.createDataSource(categoryObj.subCategory);
   }
 
-
+  ngOnDestroy(){
+    this.catObservableSubscriber.unsubscribe();
+    console.log("ng destroy");
+    console.log(this.catStore.categoryObs$);
+  }
 }

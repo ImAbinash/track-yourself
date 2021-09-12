@@ -58,3 +58,11 @@ This section logs what are the features added and when.
       <li>[+] Feature module: Dashboard</li>
    </ol>
 </details>
+<details>
+   <summary>12-Sep-2021</summary>
+   <ol>
+      <li>Service integration for cashflow</li>
+      <li>category, subcategory memory leak fixed</li>
+      <li>Tag feature for searching fixed</li>
+   </ol>
+</details>

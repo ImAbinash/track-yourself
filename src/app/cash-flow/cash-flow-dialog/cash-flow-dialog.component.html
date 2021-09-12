@@ -1,21 +1,17 @@
 <h1 mat-dialog-title style="text-align: center;"> Cash-Flow Log</h1>
 <div mat-dialog-content>
 
-    <form fxLayout="column" [formGroup]="cashFlowForm">
+    <form fxLayout="column" [formGroup]="cashFlowForm" (ngSubmit)=saveCashFlow()>
         <mat-form-field appearance="legacy">
             <mat-label>Category</mat-label>
-            <mat-select formControlName="category">
-                <mat-option value="Income">Income</mat-option>
-                <mat-option value="Income">Expense</mat-option>
-                <mat-option value="Income">Saving</mat-option>
+            <mat-select formControlName="cateoryId" (selectionChange)="onChangeCategory($event)">
+                <mat-option *ngFor="let item of (category$ |async)" [value]="item.id">{{item.categoryName}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="legacy">
             <mat-label>Sub-Category</mat-label>
-            <mat-select formControlName="subCategory">
-                <mat-option value="Income">Salary</mat-option>
-                <mat-option value="Income">Interest</mat-option>
-                <mat-option value="Income">Bank Deposite</mat-option>
+            <mat-select formControlName="subCategoryId" (selectionChange)="onChangeSubCategory($event)">
+                <mat-option *ngFor="let sc of (subCategory$ |async)" [value]="sc.id">{{sc.subCategoryName}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -40,7 +36,7 @@
 
         <mat-form-field appearance="legacy">
             <mat-label>Amount</mat-label>
-            <input type="text" matInput placeholder="Enter Amount" formControlName="amount">
+            <input type="number" matInput placeholder="Enter Amount" formControlName="amount">
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="legacy">
             <mat-label>Description</mat-label>

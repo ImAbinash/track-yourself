@@ -18,5 +18,10 @@ export class DateHelper {
         return localDateTime;
     }
 
+    convertUTCToLocalDateAndFormat(date: string,format:string) {
+        const localDateTime = moment.utc(date).local().format(format);
+        return localDateTime;
+    }
+
 
 }

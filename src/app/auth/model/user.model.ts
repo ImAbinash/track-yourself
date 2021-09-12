@@ -15,7 +15,8 @@ export interface User {
     createdDate: string,
     updatedDate: string,
     isActive: boolean,
-    isEnable: boolean
+    isEnable: boolean,
+    tag: Array<string>
 
 }
 export class UsreModel {
@@ -31,6 +32,7 @@ export class UsreModel {
     updatedDate: string;
     isActive: boolean;
     isEnable: boolean;
+    tag: Array<string>;
 
     constructor(fn: string, ln: string, email: string,
         phNo: string, gender: any, dob: string,
@@ -49,6 +51,7 @@ export class UsreModel {
         this.updatedDate = dateHelper.getCurrentDateAndTimeInUTCFormat();
         this.isActive = true;
         this.isEnable = true;
+        this.tag = [];
     }
 
 
@@ -57,11 +60,11 @@ export class UsreModel {
         return this;
     }
 
-    
+
 }
 
 export function convertDataToUserObject(data: any) {
-    type Types = "string" | "number" | "boolean";
+    type Types = "string" | "number" | "boolean" | "Array<string>";
     const keyValidators: Record<keyof User, Types> = {
         id: "string",
         firstName: "string",
@@ -75,6 +78,8 @@ export function convertDataToUserObject(data: any) {
         updatedDate: 'string',
         isActive: 'boolean',
         isEnable: 'boolean',
+        tag: 'Array<string>'
+
     }
     if (typeof data === 'object' && data !== null) {
         let userData = data as User

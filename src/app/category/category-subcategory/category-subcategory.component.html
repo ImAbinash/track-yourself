@@ -28,7 +28,7 @@
     <div style="margin-bottom:10px;">
         <mat-accordion>
             <ng-container *ngFor="let category of (catObservable$ | async);index as idx;">
-                <mat-expansion-panel (opened)="panelEvent(category)">
+                <mat-expansion-panel (opened)="panelEvent(idx, category)">
                     <mat-expansion-panel-header>
                         <mat-panel-description>
                             {{category.categoryName}}

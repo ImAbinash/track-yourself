@@ -1,3 +1,4 @@
+import { CategorySubcategoryService } from './service/category-subcategory.service';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,6 +21,7 @@ import { CategorySubcategoryComponent } from './category-subcategory/category-su
     NgMaterialModule,
     FlexLayoutModule,
     CategoryRoutingModule
-  ]
+  ],
+  providers:[CategorySubcategoryService]
 })
 export class CategoryModule { }

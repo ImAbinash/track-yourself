@@ -9,7 +9,8 @@ import { prepareTable } from '../model/subCategory-data.model';
 @Injectable()
 export class CategorySubcategoryService {
 
-  constructor(private authStore: AuthStoreService, private catSubCatStore: CategorySubcategoryStore) { }
+  constructor(private authStore: AuthStoreService, 
+    private catSubCatStore: CategorySubcategoryStore) { }
 
 
   cteateCategory(category: Partial<ICategoryWithSubCategoryModel>) {
