@@ -1,9 +1,10 @@
 import { DateHelper } from './../../shared/utils/date.util';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CashFlowStore } from './../service/cash-flow.store';
 import { CashFlowDialogComponent } from './../cash-flow-dialog/cash-flow-dialog.component';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CashFlowGridModel } from '../model/cash-flow-grid.model';
 
 @Component({
   selector: 'app-cash-flow',
@@ -11,6 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./cash-flow.component.scss']
 })
 export class CashFlowComponent implements OnInit, OnDestroy {
+  //@ViewChild('selectedRows') selectedRows: any;
+
   columnDefs = [
     { headerName: '#', field: 'slNo', width: 60, filter: 'agSetColumnFilter' },
     { headerName: 'Type', field: 'categoryType', filter: 'agTextColumnFilter' },
@@ -22,7 +25,8 @@ export class CashFlowComponent implements OnInit, OnDestroy {
   defaultColDef = {
     width: 100
   };
-
+  rowSelection = 'single';
+  gridApi: any;
   rowData$!: Observable<any>;
 
   cashFlowObservable: any;
@@ -44,7 +48,7 @@ export class CashFlowComponent implements OnInit, OnDestroy {
 
     this.cashFlowObservable = this.cfStore.cashFlow$.subscribe(data => {
       let index = 0;
-      const cashFlowData: { slNo: number; categoryType: string; subCategoryType: string; amount: number; operatedAgainst: string; operatedOnInstance: string; }[] | undefined = [];
+      const cashFlowData: CashFlowGridModel[] | undefined = [];
       data?.forEach(element => {
         const date = new DateHelper().convertUTCToLocalDateAndFormat(element?.operatedOnInstance, 'DD-MMM-YYYY');
         cashFlowData.push({
@@ -53,7 +57,8 @@ export class CashFlowComponent implements OnInit, OnDestroy {
           subCategoryType: element?.subCategoryName,
           amount: element?.amount,
           operatedAgainst: element?.operatedAgainst,
-          operatedOnInstance: date
+          operatedOnInstance: date,
+          description: element.description
         });
 
 
@@ -63,6 +68,37 @@ export class CashFlowComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.cashFlowObservable.unsubscribe();
+  }
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+
+  }
+  onSelectionChanged(event: any) {
+    var selectedRows = this.gridApi.getSelectedRows();
+    this.dialog.open(CashflowDialogOverview, {
+      data: selectedRows[0]
+    });
+
+  }
+}
+
+@Component({
+  selector: 'cashflow-dialog-overview',
+  templateUrl: 'cashflow-dialog-overview.html',
+  styles: [
+    `p {margin: 0 0 4px;}
+    span{font-weight: 500; color: #314ac5;margin-right: 5px;}
+    `
+  ]
+})
+export class CashflowDialogOverview {
+
+  constructor(
+    public dialogRef: MatDialogRef<CashflowDialogOverview>,
+    @Inject(MAT_DIALOG_DATA) public data: CashFlowGridModel) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

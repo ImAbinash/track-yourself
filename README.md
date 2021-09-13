@@ -72,5 +72,7 @@ This section logs what are the features added and when.
    <ol>
       <li>Bug fix: JSON.parse issue while landing</li>
       <li>Toast message timer increases to 5000 and added progress bar to toast message</li>
+      <li>Side nav ui width issue fixed (cosmatic changes).</li>
+      <li>Show selected cashflow row in modal</li>
    </ol>
 </details>

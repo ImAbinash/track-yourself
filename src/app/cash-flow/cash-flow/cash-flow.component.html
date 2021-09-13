@@ -6,7 +6,8 @@
                 <p class="cf-header-title"> Cash Flow</p>
             </div>
             <div fxFlex fxLayoutAlign="end">
-                <button mat-raised-button color="primary" style="float: right;" (click)="openDialog()">Add <mat-icon>add_circle_outline
+                <button mat-raised-button color="primary" style="float: right;" (click)="openDialog()">Add <mat-icon>
+                        add_circle_outline
                     </mat-icon>
                 </button>
             </div>
@@ -15,7 +16,8 @@
 
 
         <ag-grid-angular style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="rowData$ |async"
-            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef">
+            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowSelection]="rowSelection"
+            (gridReady)="onGridReady($event)" (selectionChanged)="onSelectionChanged($event)">
         </ag-grid-angular>
 
     </div>
