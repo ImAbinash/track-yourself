@@ -50,13 +50,17 @@ export class AuthStoreService {
             .valueChanges().pipe(
                 map(document => document),
                 tap(data => {
-                    const resp = data[0];
-                    const convertedUserData = convertDataToUserObject({ ...resp });
-                    this.userSubject.next({ ...convertedUserData });
-                    this.loggedOnSubject.next(true);
-                    this.notificationService.showSuccess("Successfully logged in");
-                    localStorage.setItem(this.USER_DATA, JSON.stringify(resp));
-                    this.goToDashBoard();
+                    if(data.length==1){
+                        const resp = data[0];
+                        const convertedUserData = convertDataToUserObject({ ...resp });
+                        this.userSubject.next({ ...convertedUserData });
+                        this.loggedOnSubject.next(true);
+                        this.notificationService.showSuccess("Successfully logged in");
+                        localStorage.setItem(this.USER_DATA, JSON.stringify(resp));
+                        this.goToDashBoard();
+                    }else if(data.length==0){
+                        this.notificationService.showInfo("Email doesn't exist. Please sign up.");
+                    }
                 }),
                 take(1),
                 catchError(error => {
@@ -67,7 +71,9 @@ export class AuthStoreService {
     }
 
     logonStatus() {
-        const localStorageData = (localStorage.getItem(this.USER_DATA) || '{"id":null}');
+        try{
+
+        const localStorageData = (localStorage.getItem(this.USER_DATA) )|| '{"id":null}';
         const parsedUser: User = JSON.parse(localStorageData);
         if (parsedUser.id != null) {
             this.loggedOnSubject.next(true);
@@ -79,6 +85,13 @@ export class AuthStoreService {
             this.userSubject.next(null);
             this.goToLogin();
         }
+    }catch(err:any){
+        this.notificationService.showError(err);
+        localStorage.removeItem(this.USER_DATA);
+        this.loggedOnSubject.next(false);
+        this.userSubject.next(null);
+        this.goToLogin();
+    }
 
     }
     saveTag(userId: string, tag: Array<string>) {

@@ -64,5 +64,13 @@ This section logs what are the features added and when.
       <li>Service integration for cashflow</li>
       <li>category, subcategory memory leak fixed</li>
       <li>Tag feature for searching fixed</li>
+      <li>App deployed successfully: URL: https://track-yourself-2021-4d103.firebaseapp.com/</li>
+   </ol>
+</details>
+<details>
+   <summary>13-Sep-2021</summary>
+   <ol>
+      <li>Bug fix: JSON.parse issue while landing</li>
+      <li>Toast message timer increases to 5000 and added progress bar to toast message</li>
    </ol>
 </details>

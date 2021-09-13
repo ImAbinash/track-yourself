@@ -29,7 +29,8 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      timeOut:2000,
+      timeOut:5000,
+      progressBar:true,
       closeButton:true
     }), 
     AngularFireModule.initializeApp(environment.firebaseConfig),

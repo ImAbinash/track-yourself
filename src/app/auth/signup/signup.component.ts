@@ -51,6 +51,7 @@ export class SignupComponent implements OnInit {
   register() {
     if (this.registrationForm.valid) {
       this.userService.prepareUserAndSave(this.registrationForm.value);
+      
     } else {
 
     }
