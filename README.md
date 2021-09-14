@@ -81,5 +81,6 @@ This section logs what are the features added and when.
    <ol>
       <li>Dashboard page dessign started</li>
       <li>Showing amount based on category </li>
+      <li>dashboard: showing data for selected category in ag grid table(to select tap on category card)</li>
    </ol>
 </details>

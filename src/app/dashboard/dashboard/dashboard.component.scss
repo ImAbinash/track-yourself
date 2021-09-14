@@ -15,7 +15,8 @@
     font-size: 14px;
     font-weight: 500;
     background-color: #153d77;
-    padding: 1px 3px 2px 3px;
+    //padding: 1px 3px 2px 3px;
+    padding: 0px 3px 2px 2px;
     border-radius: 30px;
     width: 24px;
     height: 26px;
@@ -38,10 +39,27 @@
 }
 .d-money{
     margin-bottom: 0;
-    font-size: 22px;
+    font-size: 20px;
     color: #153d77;
     font-weight: 300;
 }
 .d-cust-card{
     margin-bottom: 7px;
+    cursor: pointer;
+    overflow: hidden;
 }
+
+.d-selected-card{
+    background-color: #ececf1;
+}
+.d-unselected-card{
+    background-color: white;
+}
+
+.d-text-overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+

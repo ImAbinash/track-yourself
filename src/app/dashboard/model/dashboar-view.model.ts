@@ -7,5 +7,9 @@ export interface ICategoryWithCashFlowModel {
 
 export interface ICashFlowModel {
     cashFlowId: string;
+    date:string
     amount: number;
+    comment:string;
+    type:string;
+    for:string;
 }

@@ -1,7 +1,13 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" (click)="onToggleSideNav()" *ngIf="isLoggedOn$|async">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <!-- <span>Track Yourself</span> -->
-    <img src="./assets/logo/header-logo.jpg" style="width:100px;">
-  </mat-toolbar>
+<mat-toolbar color="primary" fxFlex>
+  <button mat-icon-button class="example-icon" (click)="onToggleSideNav()" *ngIf="isLoggedOn$|async">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- <span>Track Yourself</span> -->
+  <img src="./assets/logo/header-logo.jpg" style="width:100px;">
+
+
+  
+  <!-- <button mat-icon-button class="example-icon" fxLayoutAlign="flex-end">
+    <mat-icon>share</mat-icon>
+  </button> -->
+</mat-toolbar>
