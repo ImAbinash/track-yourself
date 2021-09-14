@@ -32,6 +32,7 @@ export class CashFlowTableComponent implements OnInit, OnDestroy {
     { field: 'date', sortable: true, filter: true },
     { field: 'comment', sortable: true, filter: true }
   ];
+  rowSelection = 'multiple';
 
   rowData$!: Observable<any>;
 
@@ -51,14 +52,14 @@ export class CashFlowTableComponent implements OnInit, OnDestroy {
       if (data != null && data.cashFlow != undefined && data.cashFlow.length > 0) {
         this.dataSource = data.cashFlow.slice();
         this.dataSource.map((item) => {
-          item.date = new DateHelper().convertUTCToLocalDateAndFormat(item.date, 'DD-MMM-YY');
+          item.date = new DateHelper().convertUTCToLocalDateAndFormat(item.date, 'DD-MMM-YYYY');
         })
         this.rowData$ = of(this.dataSource);
       } else {
         this.dataSource = [];
         this.rowData$ = of(this.dataSource);
       }
-    })
+    });
   }
   ngOnDestroy() {
     this.selectedObservableSubscriber.unsubscribe();
