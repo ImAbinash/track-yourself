@@ -2,7 +2,8 @@ https://dribbble.com/shots/4845401-UI-Design
 https://dribbble.com/shots/15243129-Personal-Wallet-and-Banking-Dashboard-User-Interface-Concept
 https://dribbble.com/shots/15299500-Server-Management-App-Dashboard-UI-Exploration
 
-
+Dashboard
+https://spark.bootlab.io/dashboard-default.html
 
 
 
@@ -139,9 +140,6 @@ Track-Yourself
 					->	isEnable
 					
 				
-	
-
-
 Angular project structure
 	->	https://blogs.halodoc.io/angular-best-practices/
 	
@@ -172,3 +170,6 @@ Angular fire with firebase and angular
 	
 New Angualr fire with firestore 
 	->	https://github.com/angular/angularfire/blob/HEAD/docs/install-and-setup.md
+
+Angular flex box css grid system(VVI)
+	-> 	https://indepth.dev/posts/1208/angular-flex-layout-flexbox-and-grid-layout-for-angular-component

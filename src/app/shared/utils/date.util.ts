@@ -23,5 +23,8 @@ export class DateHelper {
         return localDateTime;
     }
 
+    getTimeInMilisecond(date:string){
+        return new Date(date).getTime();
+    }
 
 }

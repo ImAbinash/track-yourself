@@ -1,1 +1,19 @@
-<p>dashboard works!</p>
+<section>
+    <div fxFlex fxLayout="column">
+        <div class="d-welcome-section">
+            Welcome {{loggedOnUser}}!
+        </div>
+
+
+        <div class="d-card-block"fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start">
+            <ng-container *ngFor="let item of (amountWRTCategory$ | async)">
+                <mat-card fxFlex="0 1 calc(50% - 10px)" class="d-cust-card">
+                    <h3 class="d-h3"><span class="d-category-heading"></span>{{item.categoryName}}   <span class="d-card-money-symbol">&#8377;</span></h3>
+                    <p class="d-money">{{item.totalAmount|currency:"INR":"symbol"}}</p>
+                </mat-card>
+            </ng-container>
+        </div>
+    </div>
+
+
+</section>

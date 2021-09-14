@@ -76,3 +76,10 @@ This section logs what are the features added and when.
       <li>Show selected cashflow row in modal</li>
    </ol>
 </details>
+<details>
+   <summary>14-Sep-2021</summary>
+   <ol>
+      <li>Dashboard page dessign started</li>
+      <li>Showing amount based on category </li>
+   </ol>
+</details>

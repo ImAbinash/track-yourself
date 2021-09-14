@@ -1,3 +1,5 @@
+import { Utility } from 'src/app/shared/utils/other.util';
+import { DateHelper } from './../../shared/utils/date.util';
 import { NotificationService } from './../../core/service/notification/notification.service';
 import { Injectable } from '@angular/core';
 
@@ -18,13 +20,10 @@ export class CategorySubcategoryStore {
 
 
   private categoryRef: AngularFirestoreCollection<Partial<ICategoryWithSubCategoryModel>>;
-
   private categorySubject = new BehaviorSubject<Array<Partial<ICategoryWithSubCategoryModel>> | null>(null);
-
-  private testSub = new BehaviorSubject<string|null>(null);
-
-
+  private testSub = new BehaviorSubject<string | null>(null);
   categoryObs$: Observable<Array<Partial<ICategoryWithSubCategoryModel>> | null>;
+
 
   constructor(private authStore: AuthStoreService, private firestore: AngularFirestore, private notification: NotificationService) {
 
@@ -55,9 +54,13 @@ export class CategorySubcategoryStore {
             this.getAllSubCategory(categoryData);
             categoryResponseObj.push({ ...categoryData });
           });
+
+          
+          new Utility().sortListBasedOnDate("ASC",categoryResponseObj,"createdDate");
+
           this.categorySubject.next(categoryResponseObj);
           this.notification.showSuccess("Category & sub-category fetched successfully.!!");
-          console.log("category store log",this.categorySubject);
+          console.log("category store log", this.categorySubject);
         }),
         take(1),
         catchError((err) => {
@@ -69,7 +72,7 @@ export class CategorySubcategoryStore {
   }
 
   getAllSubCategory(category: Partial<ICategoryWithSubCategoryModel>) {
-     this.firestore.collection(this.categoryDbPath).doc(category.id).collection(this.subCategoryDocName)
+    this.firestore.collection(this.categoryDbPath).doc(category.id).collection(this.subCategoryDocName)
       .valueChanges()
       .pipe(
         map(data => {
@@ -77,6 +80,7 @@ export class CategorySubcategoryStore {
             const subCatObj = convertDataToSubCategoryObject(element);
             category.subCategory?.push(subCatObj);
           });
+
         }),
         take(1)
       ).subscribe();
@@ -91,14 +95,17 @@ export class CategorySubcategoryStore {
           const value = this.categorySubject.getValue();
           if (value == null) {
             const categoryArray = [];
-            categoryArray.push({...categoryObj});
+            categoryArray.push({ ...categoryObj });
             this.categorySubject.next(categoryArray.slice());
           } else if (value.length == 0) {
             const categoryArray = [];
-            categoryArray.push({...categoryObj});
+            categoryArray.push({ ...categoryObj });
             this.categorySubject.next(categoryArray.slice());
           } else {
-            value.push({...categoryObj});
+            
+            value.push({ ...categoryObj });
+
+            new Utility().sortListBasedOnDate("ASC",value,"createdDate");
             this.categorySubject.next(value.slice());
           }
           this.notification.showSuccess("Category saved successfully..!!");
@@ -120,7 +127,7 @@ export class CategorySubcategoryStore {
       const value = this.categorySubject.getValue();
 
       value?.forEach(element => {
-        if(element.id == category.id)
+        if (element.id == category.id)
           element.subCategory?.push(suCategoryObj);
       });
       this.categorySubject.next(value);

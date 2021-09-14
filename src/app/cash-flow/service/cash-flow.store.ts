@@ -1,3 +1,5 @@
+import { Utility } from 'src/app/shared/utils/other.util';
+import { DateHelper } from './../../shared/utils/date.util';
 import { AuthStoreService } from './../../auth/service/auth.store';
 import { NotificationService } from './../../core/service/notification/notification.service';
 import { Injectable } from '@angular/core';
@@ -34,6 +36,9 @@ export class CashFlowStore {
                     const value = this.cashFlowSubject.getValue();
                     if (value != null) {
                         value.push({ ...newCashFlowObj });
+                        
+                        new Utility().sortListBasedOnDate("DESC",value,"operatedOnInstance");
+
                         this.cashFlowSubject.next(value.slice());
                     } else {
                         this.cashFlowSubject.next([{ ...newCashFlowObj }].slice());
@@ -62,8 +67,11 @@ export class CashFlowStore {
                     const cashflowObj: Array<ICashFlow> = [];
                     data.forEach(element => {
                         const cashFlowModelObj = convertDataToCashFlowModel(element);
-                        cashflowObj.push(cashFlowModelObj)
+                        cashflowObj.push({...cashFlowModelObj})
                     });
+
+                    new Utility().sortListBasedOnDate("DESC",cashflowObj,"operatedOnInstance");
+
                     this.cashFlowSubject.next(cashflowObj.slice());
                     this.notificationService.showSuccess('CashFlow list fetched successfuly..!!');
                 }),
@@ -76,7 +84,7 @@ export class CashFlowStore {
     }
 
 
-    
+
 
 
 }
