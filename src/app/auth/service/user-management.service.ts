@@ -13,7 +13,7 @@ export class UserManagementService {
 
   prepareUserAndSave(userForm: any) {
     const dob = userForm.dob;
-    console.log(dob);
+    userForm.emailId = userForm.emailId.toLowerCase().trim();
     this.user = new UsreModel(userForm.firstName,
       userForm.lastName, userForm.emailId, userForm.phoneNumber, userForm.gender,
       dob, userForm.isAcceptedTerms
@@ -22,6 +22,7 @@ export class UserManagementService {
   }
 
   userLogon(signnForm: { emailId: string, password: string }) {
+    signnForm.emailId = signnForm.emailId.toLowerCase().trim();
     this.authStoreService.login(signnForm);
   }
 

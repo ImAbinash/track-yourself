@@ -17,6 +17,7 @@ export interface ICashFlow {
     userId: string;
 }
 export function cashFlowInitialization(cashFlowObj: Partial<ICashFlow>) {
+    
     cashFlowObj.operatedOnInstance = new DateHelper().convertLocalDateTimeToUTC(cashFlowObj.operatedOnInstance || new Date().toString());
     const cashFlowInitObj: Partial<ICashFlow> = {
         id: new Utility().generateId(),

@@ -20,6 +20,48 @@
         <div *ngIf="selectedCardIndex>-1" style="padding:10px;">
             <app-cash-flow-table></app-cash-flow-table>
         </div>
+        <div fxLayout="column">
+            <mat-expansion-panel hideToggle (afterCollapse)="collapseEvent()">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Report
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Select dates to see the report
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form fxLayout="column" [formGroup]="filterParams" (ngSubmit)=applyFilters()>
+                    <mat-form-field appearance="legacy" class="example-form-field">
+                        <mat-label>Select date range</mat-label>
+                        <mat-date-range-input [rangePicker]="rangePicker">
+                            <input matStartDate placeholder="Start date" formControlName="startDate">
+                            <input matEndDate placeholder="End date" formControlName="endDate">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #rangePicker>
+                            <mat-date-range-picker-actions>
+                                <button mat-button matDateRangePickerCancel>Cancel</button>
+                                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                            </mat-date-range-picker-actions>
+                        </mat-date-range-picker>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary">Apply</button>
+                </form>
+
+                <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start" style="margin-top:20px;">
+                    <ng-container *ngFor="let item of (filterdCashFlows$ | async);index as idx">
+                        <mat-card fxFlex="0 1 calc(50% - 10px)" class="d-cust-card"
+                            [ngClass]="{'d-selected-card':idx==selectedCardIndex,'d-unselected-card':idx!=selectedCardIndex}">
+                            <h3 class="d-h3"><span class="d-category-heading"></span>{{item.categoryName}} <span
+                                    class="d-card-money-symbol">&#8377;</span></h3>
+                            <p class="d-text-overflow d-money">{{item.totalAmount|currency:"INR":"symbol"}}</p>
+                        </mat-card>
+        
+                    </ng-container>
+                </div>
+
+            </mat-expansion-panel>
+        </div>
     </div>
 
 

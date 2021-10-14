@@ -28,7 +28,7 @@ export class CashFlowTableComponent implements OnInit, OnDestroy {
       checkboxSelection: true
     },
     { field: 'for', sortable: true, filter: true },
-    { field: 'amount', sortable: true, filter: true },
+    { field: 'amountToShow', sortable: true, filter: true },
     { field: 'date', sortable: true, filter: true },
     { field: 'comment', sortable: true, filter: true }
   ];
@@ -52,6 +52,7 @@ export class CashFlowTableComponent implements OnInit, OnDestroy {
       if (data != null && data.cashFlow != undefined && data.cashFlow.length > 0) {
         this.dataSource = data.cashFlow.slice();
         this.dataSource.map((item) => {
+          item.amountToShow =  "₹"+item.amount.toFixed(2);
           item.date = new DateHelper().convertUTCToLocalDateAndFormat(item.date, 'DD-MMM-YYYY');
         })
         this.rowData$ = of(this.dataSource);
@@ -75,6 +76,7 @@ export class CashFlowTableComponent implements OnInit, OnDestroy {
 
 
 interface Transaction {
+  amountToShow:string;
   amount: number;
   comment: string;
   date: string;

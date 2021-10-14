@@ -84,3 +84,9 @@ This section logs what are the features added and when.
       <li>dashboard: showing data for selected category in ag grid table(to select tap on category card)</li>
    </ol>
 </details>
+<details>
+   <summary>15-Sep-2021</summary>
+   <ol>
+      <li>Dashboard/Cash-Flow: Showing rupee symbol with price in table</li>
+   </ol>
+</details>

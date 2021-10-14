@@ -61,7 +61,6 @@ export class CashFlowDialogComponent implements OnInit,OnDestroy {
       }
 
 
-      console.log(this.cashFlowForm.value);
       this.cashFlowService.saveCashFlow(this.cashFlowForm.value);
       this.cashFlowForm.reset();
       this.dialogRef.close();

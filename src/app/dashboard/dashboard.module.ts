@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { DashboardService } from './service/dashboard.service';
 import { NgMaterialModule } from './../ng-material/ng-material.module';
@@ -16,6 +17,7 @@ import { CashFlowTableComponent } from './cash-flow-table/cash-flow-table.compon
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     NgMaterialModule,
     DashboardRoutingModule,

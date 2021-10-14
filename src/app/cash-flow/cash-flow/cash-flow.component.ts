@@ -51,11 +51,12 @@ export class CashFlowComponent implements OnInit, OnDestroy {
       const cashFlowData: CashFlowGridModel[] | undefined = [];
       data?.forEach(element => {
         const date = new DateHelper().convertUTCToLocalDateAndFormat(element?.operatedOnInstance, 'DD-MMM-YYYY');
+        const amount = parseInt(element?.amount.toString()).toFixed(2);
         cashFlowData.push({
           slNo: ++index,
           categoryType: element?.categoryName,
           subCategoryType: element?.subCategoryName,
-          amount: element?.amount,
+          amount: "₹"+amount,
           operatedAgainst: element?.operatedAgainst,
           operatedOnInstance: date,
           description: element.description
