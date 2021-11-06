@@ -24,6 +24,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 # Important url
     - Angular fire new url
     https://github.com/angular/angularfire/blob/HEAD/docs/install-and-setup.md
+    - How to debug Mobile chrome browser 
+    https://www.addictivetips.com/android/get-web-console-log-chrome-for-android/
 
 
 # Feature added 

@@ -84,14 +84,22 @@ export class DashboardService {
 
   filteredCashFlow(filterObj: { startDate: '', endDate: '' }) {
     console.clear();
+    console.log("filter method gets called!!!")
+    console.log("values",  filterObj.startDate+" , "+ filterObj.endDate);
+    console.log("Condition: ", (filterObj.startDate != '' && (filterObj.endDate == '' || filterObj.endDate == null || filterObj.endDate == undefined)));
     if (filterObj.startDate != '' && (filterObj.endDate == '' || filterObj.endDate == null || filterObj.endDate == undefined)) {
       filterObj.endDate = filterObj.startDate;
     }
+    console.log("After re init" ,filterObj)
     let stD = new Date(filterObj.startDate);
     let enD = new Date(filterObj.endDate);
+    console.log("Start date: ", stD);
+    console.log("End date: ", enD);
+
     let startDate = new Date(stD.getFullYear(), stD.getMonth(), stD.getDate(), 0, 0, 0, 0).getTime();
     let endDate = new Date(enD.getFullYear(), enD.getMonth(), enD.getDate(), 23, 59, 59, 999).getTime();
-
+    console.log("Start date (startDate): ", startDate);
+    console.log("End date (endDate): ", endDate);
 
     this.catWithAmountObj.forEach((data => {
       //console.log("catWithAmountObj: ",data);

@@ -50,13 +50,28 @@
 
                 <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start" style="margin-top:20px;">
                     <ng-container *ngFor="let item of (filterdCashFlows$ | async);index as idx">
-                        <mat-card fxFlex="0 1 calc(50% - 10px)" class="d-cust-card"
-                            [ngClass]="{'d-selected-card':idx==selectedCardIndex,'d-unselected-card':idx!=selectedCardIndex}">
+                        <mat-card (click)="selectedReport(idx,item)" fxFlex="0 1 calc(50% - 10px)" class="d-cust-card"
+                            [ngClass]="{'d-selected-card':idx==selectedReportCardIndex,'d-unselected-card':idx!=selectedReportCardIndex}">
                             <h3 class="d-h3"><span class="d-category-heading"></span>{{item.categoryName}} <span
                                     class="d-card-money-symbol">&#8377;</span></h3>
                             <p class="d-text-overflow d-money">{{item.totalAmount|currency:"INR":"symbol"}}</p>
                         </mat-card>
-        
+
+                    </ng-container>
+                </div>
+
+
+                <div *ngIf="selectedReportCardIndex != -1 && selectedCashFlowList.cashFlow.length >0" fxLayout="column" fxLayoutGap="10px"
+                    fxLayoutAlign="flex-start" style="margin-top:20px;">
+                    <h3 class="d-cashflow-category-header">{{selectedCashFlowList.categoryName}} ({{selectedCashFlowList.totalAmount|currency:"INR":"symbol"}}) </h3>
+                    <ng-container *ngFor="let item of selectedCashFlowList.cashFlow;index as idx">
+                        <div class="d-cashflow-report-card-box">
+                            <p class="d-no-margin"><span><mat-icon class="d-mat-icon-size">credit_card</mat-icon> </span> <span class="d-cashflow-report-card-money">{{item.amount|currency:"INR":"symbol"}}</span></p>
+                            <p class="d-no-margin"><span><mat-icon class="d-mat-icon-size"> person_pin</mat-icon> </span> <span>{{item.for}}</span></p>
+                            <p class="d-no-margin"><span><mat-icon class="d-mat-icon-size">calendar_today</mat-icon> </span> <span>{{item.date}}</span></p>
+                            <p class="d-no-margin"><span><mat-icon class="d-mat-icon-size"> message</mat-icon> </span> <span>{{item.comment}}</span></p>
+                            <p class="d-no-margin"><span><mat-icon class="d-mat-icon-size"> category</mat-icon> </span> <span>{{item.type}}</span></p>
+                        </div>
                     </ng-container>
                 </div>
 

@@ -1,3 +1,5 @@
+import { DateHelper } from './../../shared/utils/date.util';
+import { ICategoryWithCashFlowModel } from './../model/dashboar-view.model';
 import { map, tap, filter } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
@@ -5,7 +7,6 @@ import { AuthStoreService } from './../../auth/service/auth.store';
 import { Observable } from 'rxjs';
 import { DashboardService } from './../service/dashboard.service';
 import { Component, OnInit } from '@angular/core';
-import { ICategoryWithCashFlowModel } from '../model/dashboar-view.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,12 @@ export class DashboardComponent implements OnInit {
 
   filterParams: FormGroup;
   filterdCashFlows$: any;
+  selectedReportCardIndex:number = -1;
+
+
+  selectedCashFlowList!:ICategoryWithCashFlowModel;
+
+
 
   constructor(private authStore: AuthStoreService, private dashboardService: DashboardService, private fb: FormBuilder) {
     this.filterParams = this.fb.group({
@@ -46,13 +53,26 @@ export class DashboardComponent implements OnInit {
     console.log("Filter param object: ", this.filterParams.value);
     this.dashboardService.filteredCashFlow(this.filterParams.value);
 
-    this.filterdCashFlows$.subscribe((data: any) => {
-      console.log("filter: ", data)
-    });
-
   }
   collapseEvent(){
     this.filterParams.reset();
     this.dashboardService.filteredCashFlow(this.filterParams.value);
+  }
+  selectedReport(index:number,item:ICategoryWithCashFlowModel){
+    this.selectedReportCardIndex = this.selectedReportCardIndex == index ? -1 : index;
+
+    
+    console.log(this.selectedCashFlowList);
+
+    if(index ==-1){
+      this.selectedCashFlowList={} as ICategoryWithCashFlowModel;
+    }else{
+      this.selectedCashFlowList= {...item};
+      this.selectedCashFlowList.cashFlow.forEach(element => {
+        element.date = new DateHelper().convertUTCToLocalDateAndFormat(element.date,"DD-MMM-YYYY (dddd)");
+      });
+    }
+
+
   }
 }

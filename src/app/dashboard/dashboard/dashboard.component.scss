@@ -62,4 +62,30 @@
 }
 
 
+.d-cashflow-report-card-box{
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #efefef;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+.d-no-margin{
+    margin: 2px 0 0px;
+}
+.d-cashflow-report-card-money{
+    color: #153d77;
+    font-weight: 500;
+    margin-left: 9px;
+    font-size: 17px;
+}
 
+.d-mat-icon-size{
+    font-size: 19px;
+    color: #9f3ea3;
+}
+
+.d-cashflow-category-header{
+    margin-bottom: 10px;
+    color: #9f3ea3;
+    text-decoration: underline;
+    font-weight: 500;
+}
